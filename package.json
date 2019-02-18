@@ -1,0 +1,13 @@
+{
+  "name": "abbadon",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "boyang",
+  "license": "MIT",
+  "dependencies": {
+    "chromedriver": "^2.45.0",
+    "cucumber": "^5.1.0",
+    "isomorphic-fetch": "^2.2.1",
+    "selenium-webdriver": "^4.0.0-alpha.1"
+  }
+}
