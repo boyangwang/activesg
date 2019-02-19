@@ -7,6 +7,7 @@
   "dependencies": {
     "chromedriver": "^2.45.0",
     "cucumber": "^5.1.0",
+    "https-proxy-agent": "^2.2.1",
     "isomorphic-fetch": "^2.2.1",
     "moment": "^2.24.0",
     "node-jsencrypt": "^1.0.0",

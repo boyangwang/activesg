@@ -1,6 +1,8 @@
 require('isomorphic-fetch');
 const JsEncrypt = require('node-jsencrypt');
 const moment = require('moment');
+const HttpsProxyAgent = require('https-proxy-agent');
+
 
 const cookiesArrToValue = (arr) => {
   return arr
@@ -17,11 +19,15 @@ const getLoginCookiesFromRequest = async () => {
   const email = process.argv[2];
   const password = process.argv[3];
 
-  const authPageResponse = await fetch('https://members.myactivesg.com/auth');
+  const authPageResponse = await fetch('https://members.myactivesg.com/auth', {
+    headers: {
+
+    },
+  });
   const authPageCookies = Array.from(authPageResponse.headers._headers['set-cookie']);
   console.log('authCookies', authPageCookies);
   const loginPage = await authPageResponse.text();
-  
+
   const loginCsrf = loginPage.match(/\<input type\=\"hidden\" name\=\"_csrf\" value\=\"(.+)\" \/\>/)[1];
   const publicKey = loginPage.match(/(-----BEGIN PUBLIC KEY-----[\s\S]+-----END PUBLIC KEY-----)/)[1];
 //   const publicKey = `-----BEGIN PUBLIC KEY-----
@@ -37,29 +43,45 @@ const getLoginCookiesFromRequest = async () => {
   jsEncrypt.setPublicKey(publicKey);
   const ecPassword = jsEncrypt.encrypt(password);
 
+  const processedFormData = [
+    `email=${encodeURIComponent(email)}`,
+    `ecpassword=${encodeURIComponent(ecPassword)}`,
+    `_csrf=${encodeURIComponent(loginCsrf)}`,
+  ].join('&');
+  console.log('login processedFormData: ', processedFormData);
+
+  const processedCookie = cookiesArrToValue(authPageCookies);
+  console.log('login processedCookie: ', processedCookie);
+
   const loginResponse = await(fetch('https://members.myactivesg.com/auth/signin', {
     method: 'POST',
     credentials: 'include',
+    redirect: 'manual',
+    agent: new HttpsProxyAgent('http://localhost:8888'),
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded; charset=utf-8',
-      'Cookies': cookiesArrToValue(authPageCookies),
+      'Cache-Control': 'max-age=0',
+      'Connection': 'keep-alive',
+      'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
+      'Host': 'members.myactivesg.com',
+      'Accept-Language': 'en-gb',
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Cookie': processedCookie,
       'Origin': 'https://members.myactivesg.com',
       'Referer': 'https://members.myactivesg.com/auth?redirect=%2Fprofile',
       'Upgrade-Insecure-Requests': '1',
       'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36',
     },
-    body: [
-      `email=${encodeURIComponent(email)}`,
-      `ecpassword=${encodeURIComponent(ecPassword)}`,
-      `_csrf=${encodeURIComponent(loginCsrf)}`,
-    ].join('&'),
+    body: processedFormData,
   }));
   
-  const loginCookies = Array.from(loginResponse.headers._headers['set-cookie']);
+  console.log('loginResponse', loginResponse);
+  console.log('loginResponse headers', loginResponse.headers);
+  
   const loginSuccessPage = await loginResponse.text();
+  const loginCookies = Array.from(loginResponse.headers._headers['set-cookie']);
   console.log('loginCookies', loginCookies);
-  console.log('loginSuccessPage', loginSuccessPage.substring(loginSuccessPage.indexOf('WANG BOYANG')));
-  return cookiesArrToValue(loginCookies);
+  console.log('loginSuccessPage', loginSuccessPage.indexOf('WANG BOYANG'));
+  return cookiesArrToValue(loginCookies.concat(authPageCookies.filter(r => !r.startsWith('incap'))));
 };
 
 const getLoginCookiesFromLocal = (arr) => {
@@ -79,21 +101,22 @@ const addToCart = async (cookies) => {
     {
       credentials: 'include',
       headers: {
-        'Upgrade-Insecure-Requests': '1',
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36',
+        'Cache-Control': 'max-age=0',
+        'Connection': 'keep-alive',
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8',
-        'Accept-Language': 'en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7',
+        'Accept-Language': 'en-gb',
+        'Content-Type': 'application/x-www-form-urlencoded',
         Cookie: cookies,
       }
     }
   );
   const venuePage = await venueResponse.text();
-
+  debugger;
   const url = venuePage.match(/\<form id\=\"formTimeslots\" action\=\"(https:\/\/members\.myactivesg\.com\/facilities\/processStandardBooking\/.+)\"/)[1];
 
   const timeslotValues = venuePage.match(/value\=\"(Court 0[;:0-9]+)\"/g);
   const firstHashValue = venuePage.match(/timeslot-container[\s\S]+?input type\=\"hidden\" name\=\"(.+?)\" value\=\"(.+?)\"/);
-  
+
   const secondHashValueFile = await
     (await fetch('https://members.myactivesg.com/assets/cache/activesg2017_view_facilities_mod.js'))
     .text();
@@ -122,7 +145,9 @@ const addToCart = async (cookies) => {
       'Referer': 'https://members.myactivesg.com/facilities/view/activity/18/venue/311?time_from=',
       'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36',
       'X-Requested-With': 'XMLHttpRequest',
-      Cookie: cookies
+      Cookie: cookies,
+      'Upgrade-Insecure-Requests': '1',
+      'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36',
     },
     body: processedFormData,
   }));
