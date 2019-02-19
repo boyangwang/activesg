@@ -62,3 +62,19 @@ curl -vvv 'https://members.myactivesg.com/auth/signin' -H 'Upgrade-Insecure-Requ
 
 
 curl -vvv 'https://members.myactivesg.com/auth/signin' -H 'Connection: keep-alive' -H 'Cache-Control: max-age=0' -H 'Upgrade-Insecure-Requests: 1' -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36' -H 'Origin: https://members.myactivesg.com' -H 'Content-Type: application/x-www-form-urlencoded' -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8' -H 'Referer: https://members.myactivesg.com/auth?redirect=%2Fprofile' -H 'Accept-Encoding: gzip, deflate, br' -H 'Accept-Language: en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7' -H 'Cookie: _fbp=fb.1.1550522858468.1991501904; visid_incap_148311=O2AGKcdTTxagT0mwKH1Hi+oZa1wAAAAAQUIPAAAAAAD+ZflSGkvTkJ4qJC+xqhw9; nlbi_148311=QbrrTfwux3QlDo3jMXDQTwAAAADzOu1ObbhxhFqcL3IHPayo; incap_ses_165_148311=5jiPa1UFuBr9RnYXCTRKAuoZa1wAAAAA8ssQ9+5+K0YEPVYPLWibQg==; _ga=GA1.3.1806541740.1550522859; _gid=GA1.3.1073136320.1550522859; _ga=GA1.2.1806541740.1550522859; _gid=GA1.2.1073136320.1550522859; __hstc=165096928.95d2526b1782bbe4258370c0335c2aef.1550522859829.1550522859829.1550522859829.1; hubspotutk=95d2526b1782bbe4258370c0335c2aef; __hssrc=1; incap_ses_965_148311=OIRMUsTGNmWjEcwbBl9kDfkja1wAAAAAC0K6tMzkK385JFWG6wkRzA==; ActiveSG=5b7gec9jka8n8ko0b7q8n742h74l9m6q; __hssc=165096928.12.1550522859830' --data 'email=wangboyang1991%40gmail.com&ecpassword=dEbRKPAmAcIvSuR%2FYU2XVCGB3BraKMV4oiNK43UQGVbfW%2FnTY%2BE%2FciVLuO53Muz4tib4n9X1mEH15l10%2F%2BBRt8bnBVrZmugrdVb88KacHLXY0VwTnpqbJLTeDQ2H2WEJwlsX9xVt4L3JsU9%2BXI7vbqG1zni4B5jYApLBqP7jhZopd6QdiV%2BprncGITC60viXakxknoTwX74wCAcudnYr24IKhl8lNiA%2FcvJWvBrkKS%2BtV0Pz0ifMnm29om5%2FHICT0jZSCTf3PUl9%2BjxJZdnMTADRX6B2%2BHB7ovqTcS406BOzut35p5JV%2F57QR9P4napZodj9hqlHH4ng7lzNKKLtgQ%3D%3D&_csrf=8d8e670b57808ffcb35534abed2285c3'
+
+POST https://members.myactivesg.com/auth/signin HTTP/1.1
+Connection: keep-alive
+Content-Length: 453
+Cache-Control: max-age=0
+Origin: https://members.myactivesg.com
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36
+Content-Type: application/x-www-form-urlencoded
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+Referer: https://members.myactivesg.com/auth?redirect=%2Fprofile
+Accept-Language: en-gb
+Cookie: ActiveSG=a744m4ehg1as53dg34tfjl2s2fad5q96; visid_incap_148311=XjerHGQoRKGohm7F01T0tacva1wAAAAAQUIPAAAAAAA+XlKhPKdSEuFRDwP+WMmZ; nlbi_148311=fycdY++XciOLiFunMXDQTwAAAACP8FgKelHoofZNm4wLfw7D; incap_ses_965_148311=YE41Sg5GxB9ZRM4bBl9kDacva1wAAAAAiJ0zbZF1V+br3CA/F1APBQ==; _ga=GA1.2.725564872.1550528429; _gid=GA1.2.1351220055.1550528429; _ga=GA1.3.725564872.1550528429; _gid=GA1.3.1351220055.1550528429; __hstc=165096928.0b466bd2a67c472287dda1e4399435b2.1550528430953.1550528430953.1550528430953.1; hubspotutk=0b466bd2a67c472287dda1e4399435b2; __hssrc=1; __hssc=165096928.2.1550528430953; _fbp=fb.1.1550528429465.87461506
+Host: members.myactivesg.com
+
+email=wangboyang1991%40gmail.com&ecpassword=SmFDU4i8Di%2F1VB9F0bZVqMdgA%2BzgUyj0nOOfYepHn1mkwK0Tj0Ww14JAaYWXE1Wk7gfeWf%2FG7atq7S39zYBeFtCwdYnYCOsNqKx2jquBrSDLZFgbh2X7B8%2Bh7PJQuzKjF6Gz47Fm8vzEYM1XcmudzBxHcjtkB81hOVjvktM30Zm3%2Bs9kJKOki6X5plIRh5PFtAwszz5kddXxT%2Fc05Rt1L1kW5rI54Fk2u97zlL9vvO8g9plFVkLTFeQJQSDpQSKaLsvdGrEM%2BS0Wo9eO%2FzZXYjHlNShb83cYPkAil2VBVi5%2FDAMXovDXPTuVAWemg%2Fq6TsdXX%2Bb3VY3n5yYumDG65g%3D%3D&_csrf=8c4e43cd334203b3d82077548d7506bc
